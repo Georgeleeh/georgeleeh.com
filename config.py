@@ -252,4 +252,20 @@ class Config:
                 "Balanced technical sophistication with user experience simplicity, ensuring quality-of-life improvements don't require technical knowledge.",
             ],
         },
+        {
+            "name": "Nissan Figaro Restoration & Maintenance",
+            "slug": "nissan-figaro-restoration",
+            "description": "Ongoing restoration and maintenance of a classic Nissan Figaro purchased in poor condition. Brought the car back to reliable daily use through mechanical repairs, component replacements, and hands-on problem diagnosis.",
+            "stack": ["Automotive Repair", "Mechanical Engineering", "Problem Diagnosis", "Hands-on Work"],
+            "link": "#",
+            "details": [
+                "Purchased Nissan Figaro in non-running condition and systematically diagnosed engine and fuel system issues.",
+                "Replaced two fuel injectors after identifying fuel delivery problems affecting engine performance.",
+                "Replaced rocker shaft and multiple gaskets to resolve oil leaks and improve engine reliability.",
+                "Installed complete exhaust system replacement to address corrosion and emissions issues.",
+                "Sourced and fitted replacement seats to restore interior comfort and aesthetics.",
+                "Successfully brought the car to reliable running condition and driven hundreds of miles since repairs.",
+                "Developed mechanical troubleshooting skills and hands-on experience with classic car systems through iterative problem-solving.",
+            ],
+        },
     ]
