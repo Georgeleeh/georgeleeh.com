@@ -15,7 +15,6 @@ def _build_resume_pdf() -> BytesIO:
     education = current_app.config["EDUCATION"]
     skills = current_app.config["SKILLS"]
     contact_email = current_app.config["CONTACT_EMAIL"]
-    linkedin_url = current_app.config["LINKEDIN_URL"]
 
     buffer = BytesIO()
     pdf = canvas.Canvas(buffer, pagesize=letter)
@@ -24,12 +23,14 @@ def _build_resume_pdf() -> BytesIO:
     margin = 40
     y = height - margin
 
-    ink = colors.HexColor("#0F172A")
+    bg = colors.HexColor("#FFFFFF")
+    panel = colors.HexColor("#EEF2FF")
+    panel_soft = colors.HexColor("#F8FAFC")
+    text = colors.HexColor("#0F172A")
     muted = colors.HexColor("#475569")
     accent = colors.HexColor("#1D4ED8")
-    accent_soft = colors.HexColor("#DBEAFE")
+    accent_alt = colors.HexColor("#7C3AED")
     line_color = colors.HexColor("#CBD5E1")
-    white = colors.HexColor("#FFFFFF")
 
     def wrap_text(text: str, font: str, size: int, max_width: float):
         words = text.split()
@@ -64,11 +65,11 @@ def _build_resume_pdf() -> BytesIO:
         title_text = label.upper()
         pdf.setFillColor(accent)
         pdf.rect(x_pos, y_pos - 3, 4, 13, stroke=0, fill=1)
-        pdf.setFillColor(ink)
+        pdf.setFillColor(text)
         pdf.setFont("Helvetica-Bold", 12)
         title_x = x_pos + 9
         pdf.drawString(title_x, y_pos, title_text)
-        pdf.setStrokeColor(line_color)
+        pdf.setStrokeColor(accent_alt)
         pdf.setLineWidth(0.8)
         title_w = pdf.stringWidth(title_text, "Helvetica-Bold", 12)
         line_start = title_x + title_w + 8
@@ -81,14 +82,16 @@ def _build_resume_pdf() -> BytesIO:
         return y_pos - 18
 
     def draw_page_chrome():
-        pdf.setFillColor(white)
+        pdf.setFillColor(bg)
         pdf.rect(0, 0, width, height, stroke=0, fill=1)
-        pdf.setFillColor(accent_soft)
-        pdf.rect(0, height - 62, width, 62, stroke=0, fill=1)
+        pdf.setFillColor(panel)
+        pdf.rect(0, height - 66, width, 66, stroke=0, fill=1)
         pdf.setFillColor(accent)
-        pdf.rect(0, height - 62, 10, 62, stroke=0, fill=1)
+        pdf.rect(0, height - 66, 10, 66, stroke=0, fill=1)
+        pdf.setFillColor(accent_alt)
+        pdf.rect(10, height - 66, 4, 66, stroke=0, fill=1)
 
-        pdf.setFillColor(ink)
+        pdf.setFillColor(text)
         pdf.setFont("Helvetica-Bold", 20)
         pdf.drawString(margin, height - 36, profile["name"])
         pdf.setFont("Helvetica", 10)
@@ -96,9 +99,9 @@ def _build_resume_pdf() -> BytesIO:
         pdf.drawString(margin, height - 52, f"{profile['title']} · {profile['location']}")
 
         pdf.setFont("Helvetica", 9)
-        pdf.setFillColor(ink)
+        pdf.setFillColor(text)
         pdf.drawRightString(width - margin, height - 36, contact_email)
-        pdf.setFillColor(muted)
+        pdf.setFillColor(accent)
         pdf.drawRightString(width - margin, height - 50, "georgeleeh.com")
 
         pdf.setStrokeColor(line_color)
@@ -107,145 +110,175 @@ def _build_resume_pdf() -> BytesIO:
         pdf.setFont("Helvetica", 8)
         pdf.setFillColor(muted)
         pdf.drawString(margin, 24, "Resume generated from live portfolio data")
-        pdf.drawRightString(width - margin, 24, "linkedin")
+        pdf.drawRightString(width - margin, 24, "linkedin.com/in/george-leeh")
 
     draw_page_chrome()
     y = height - 80
 
-    # Summary
-    y = section_title("Summary", margin, y, width - (margin * 2))
+    # Key Highlights section
+    y = section_title("Key Highlights", margin, y, width - (margin * 2))
     pdf.setFillColor(muted)
     pdf.setFont("Helvetica", 10)
-    for summary_line in wrap_text(profile["summary"], "Helvetica", 10, width - (margin * 2)):
-        y = ensure_space(y, 14)
-        pdf.drawString(margin, y, summary_line)
-        y -= 13
-    y -= 8
-
-    # Two-column body
-    left_x = margin
-    gap = 16
-    left_w = 180
-    right_x = left_x + left_w + gap
-    right_w = width - margin - right_x
-
-    left_y = y
-    right_y = y
-
-    # Left column: highlights + skills + links
-    left_y = section_title("Highlights", left_x, left_y, left_w)
-    pdf.setFillColor(muted)
-    pdf.setFont("Helvetica", 9)
     for item in highlights:
-        wrapped = wrap_text(item, "Helvetica", 9, left_w - 12)
+        wrapped = wrap_text(item, "Helvetica", 10, width - (margin * 2) - 16)
         for i, line in enumerate(wrapped):
+            y = ensure_space(y, 14)
             bullet = "• " if i == 0 else "  "
-            pdf.drawString(left_x + 6, left_y, f"{bullet}{line}")
-            left_y -= 12
-        left_y -= 2
+            pdf.drawString(margin + 8, y, f"{bullet}{line}")
+            y -= 13
+        y -= 4
+    y -= 12
 
-    left_y -= 6
-    left_y = section_title("Core Skills", left_x, left_y, left_w)
-    pill_x = left_x + 1
-    pill_y = left_y
-    for skill in skills:
-        label = skill if len(skill) <= 25 else f"{skill[:22]}..."
-        pill_w = pdf.stringWidth(label, "Helvetica", 8) + 14
-        if pill_x + pill_w > left_x + left_w:
-            pill_x = left_x + 1
-            pill_y -= 15
-        pdf.setFillColor(accent_soft)
-        pdf.roundRect(pill_x, pill_y - 9, pill_w, 12, 5, stroke=0, fill=1)
-        pdf.setStrokeColor(colors.HexColor("#BFDBFE"))
-        pdf.setLineWidth(0.6)
-        pdf.roundRect(pill_x, pill_y - 9, pill_w, 12, 5, stroke=1, fill=0)
-        pdf.setFillColor(ink)
-        pdf.setFont("Helvetica", 8)
-        pdf.drawString(pill_x + 6, pill_y - 5, label)
-        pill_x += pill_w + 5
-    left_y = pill_y - 28
-
-    left_y = section_title("Links", left_x, left_y, left_w)
-    pdf.setFillColor(muted)
-    pdf.setFont("Helvetica", 8)
-    for link_line in [linkedin_url, "Portfolio: georgeleeh.com"]:
-        for link_text_line in wrap_text(link_line, "Helvetica", 8, left_w - 10):
-            pdf.drawString(left_x + 6, left_y, link_text_line)
-            left_y -= 11
-        left_y -= 2
-
-    left_y -= 4
-    left_y = section_title("Education", left_x, left_y, left_w)
-    pdf.setFillColor(muted)
-    pdf.setFont("Helvetica-Bold", 8)
-    for item in education:
-        degree_lines = wrap_text(item["qualification"], "Helvetica-Bold", 8, left_w - 10)
-        for degree_line in degree_lines:
-            if left_y < 70:
-                break
-            pdf.drawString(left_x + 6, left_y, degree_line)
-            left_y -= 10
-
-        pdf.setFont("Helvetica", 8)
-        if left_y >= 70:
-            pdf.drawString(left_x + 6, left_y, item["period"])
-            left_y -= 10
-
-        institution_lines = wrap_text(item["institution"], "Helvetica", 8, left_w - 10)
-        for institution_line in institution_lines:
-            if left_y < 70:
-                break
-            pdf.drawString(left_x + 6, left_y, institution_line)
-            left_y -= 10
-        left_y -= 4
-        pdf.setFont("Helvetica-Bold", 8)
-
-    # Right column: timeline experience
-    right_y = section_title("Experience Timeline", right_x, right_y, right_w)
-    line_x = right_x + 8
-
-    pdf.setStrokeColor(colors.HexColor("#93C5FD"))
-    pdf.setLineWidth(1.2)
-    pdf.line(line_x, right_y + 2, line_x, 56)
-
+    # Experience section
+    y = section_title("Experience", margin, y, width - (margin * 2))
     for job in experience:
-        estimated_height = 34
+        # Estimate height needed for this job entry
+        card_text_w = width - (margin * 2) - 32
+        estimated_height = 40
         for bullet in job["bullets"]:
-            estimated_height += (len(wrap_text(bullet, "Helvetica", 9, right_w - 34)) * 11) + 3
+            estimated_height += (len(wrap_text(bullet, "Helvetica", 9, card_text_w)) * 12) + 3
+        
+        y = ensure_space(y, estimated_height + 8)
 
-        right_y = ensure_space(right_y, estimated_height + 14)
-
-        pdf.setFillColor(accent)
-        pdf.circle(line_x, right_y - 6, 2.5, stroke=0, fill=1)
-
-        card_x = right_x + 16
-        card_y_top = right_y
-        card_h = estimated_height
-        pdf.setFillColor(colors.HexColor("#F8FAFC"))
-        pdf.roundRect(card_x, card_y_top - card_h + 10, right_w - 16, card_h, 8, stroke=0, fill=1)
-        pdf.setStrokeColor(colors.HexColor("#E2E8F0"))
+        card_x = margin + 2
+        card_w = width - (margin * 2) - 4
+        pdf.setFillColor(panel_soft)
+        pdf.roundRect(card_x, y - estimated_height + 8, card_w, estimated_height, 8, stroke=0, fill=1)
+        pdf.setStrokeColor(line_color)
         pdf.setLineWidth(0.8)
-        pdf.roundRect(card_x, card_y_top - card_h + 10, right_w - 16, card_h, 8, stroke=1, fill=0)
+        pdf.roundRect(card_x, y - estimated_height + 8, card_w, estimated_height, 8, stroke=1, fill=0)
 
-        pdf.setFillColor(ink)
+        line_y = y - 12
+        
+        # Job header
+        pdf.setFillColor(text)
         pdf.setFont("Helvetica-Bold", 11)
-        pdf.drawString(card_x + 10, card_y_top - 8, f"{job['role']} · {job['company']}")
+        job_title = f"{job['role']} · {job['company']}"
+        pdf.drawString(card_x + 10, line_y, job_title)
+        
+        # Period on the same line, right-aligned
         pdf.setFont("Helvetica", 9)
         pdf.setFillColor(accent)
-        pdf.drawString(card_x + 10, card_y_top - 21, job["period"])
-
-        by = card_y_top - 34
+        period_width = pdf.stringWidth(job["period"], "Helvetica", 9)
+        pdf.drawString(card_x + card_w - period_width - 10, line_y, job["period"])
+        line_y -= 16
+        
+        # Job bullets
         pdf.setFillColor(muted)
         pdf.setFont("Helvetica", 9)
         for bullet in job["bullets"]:
-            wrapped = wrap_text(bullet, "Helvetica", 9, right_w - 34)
+            wrapped = wrap_text(bullet, "Helvetica", 9, card_text_w)
             for i, bullet_line in enumerate(wrapped):
                 prefix = "• " if i == 0 else "  "
-                pdf.drawString(card_x + 10, by, f"{prefix}{bullet_line}")
-                by -= 11
-            by -= 2
-        right_y = card_y_top - card_h - 8
+                pdf.drawString(card_x + 18, line_y, f"{prefix}{bullet_line}")
+                line_y -= 12
+            line_y -= 2
+        y -= estimated_height + 10
+    
+    y -= 8
 
+    # Skills section
+    y = section_title("Skills", margin, y, width - (margin * 2))
+    y = ensure_space(y, 80)
+    
+    pill_x = margin + 8
+    pill_y = y
+    row_height = 18
+    
+    for skill in skills:
+        label = skill if len(skill) <= 30 else f"{skill[:27]}..."
+        pill_w = pdf.stringWidth(label, "Helvetica", 9) + 16
+        
+        # Check if we need to wrap to next line
+        if pill_x + pill_w > width - margin - 8:
+            pill_x = margin + 8
+            pill_y -= row_height
+            y = ensure_space(pill_y, row_height)
+            if y != pill_y:
+                pill_y = y
+        
+        # Draw pill background
+        pdf.setFillColor(panel_soft)
+        pdf.roundRect(pill_x, pill_y - 10, pill_w, 14, 6, stroke=0, fill=1)
+        
+        # Draw pill border
+        pdf.setStrokeColor(line_color)
+        pdf.setLineWidth(0.6)
+        pdf.roundRect(pill_x, pill_y - 10, pill_w, 14, 6, stroke=1, fill=0)
+        
+        # Draw skill text
+        pdf.setFillColor(text)
+        pdf.setFont("Helvetica", 9)
+        pdf.drawString(pill_x + 8, pill_y - 5, label)
+        
+        pill_x += pill_w + 6
+    
+    y = pill_y - 24
+
+    # Education section
+    y = section_title("Education & Qualifications", margin, y, width - (margin * 2))
+    for item in education:
+        period_width = pdf.stringWidth(item["period"], "Helvetica", 9)
+        card_text_w = width - (margin * 2) - 32
+
+        card_w = width - (margin * 2) - 4
+        qualification_w = max(160, card_w - period_width - 44)
+        qualification_lines = wrap_text(item["qualification"], "Helvetica-Bold", 11, qualification_w)
+        institution_lines = wrap_text(item["institution"], "Helvetica-Oblique", 9, card_text_w)
+
+        # Estimate height needed
+        estimated_height = 22
+        estimated_height += len(qualification_lines) * 13
+        estimated_height += 3
+        estimated_height += len(institution_lines) * 11
+        estimated_height += 4
+        if item.get("notes"):
+            for note in item["notes"]:
+                estimated_height += (len(wrap_text(note, "Helvetica", 9, card_text_w)) * 12) + 2
+        
+        y = ensure_space(y, estimated_height + 8)
+
+        card_x = margin + 2
+        pdf.setFillColor(panel_soft)
+        pdf.roundRect(card_x, y - estimated_height + 8, card_w, estimated_height, 8, stroke=0, fill=1)
+        pdf.setStrokeColor(line_color)
+        pdf.setLineWidth(0.8)
+        pdf.roundRect(card_x, y - estimated_height + 8, card_w, estimated_height, 8, stroke=1, fill=0)
+
+        line_y = y - 12
+        
+        # Qualification header
+        pdf.setFillColor(text)
+        pdf.setFont("Helvetica-Bold", 11)
+        for q_line in qualification_lines:
+            pdf.drawString(card_x + 10, line_y, q_line)
+            line_y -= 13
+        
+        # Period on the same line, right-aligned
+        pdf.setFont("Helvetica", 9)
+        pdf.setFillColor(accent)
+        pdf.drawString(card_x + card_w - period_width - 10, y - 12, item["period"])
+        line_y -= 2
+        
+        # Institution
+        pdf.setFillColor(muted)
+        pdf.setFont("Helvetica-Oblique", 9)
+        for institution_line in institution_lines:
+            pdf.drawString(card_x + 18, line_y, institution_line)
+            line_y -= 11
+        line_y -= 3
+        
+        # Notes
+        if item.get("notes"):
+            pdf.setFont("Helvetica", 9)
+            for note in item["notes"]:
+                wrapped = wrap_text(note, "Helvetica", 9, card_text_w)
+                for i, note_line in enumerate(wrapped):
+                    prefix = "• " if i == 0 else "  "
+                    pdf.drawString(card_x + 18, line_y, f"{prefix}{note_line}")
+                    line_y -= 12
+                line_y -= 2
+        y -= estimated_height + 10
     pdf.save()
     buffer.seek(0)
     return buffer
