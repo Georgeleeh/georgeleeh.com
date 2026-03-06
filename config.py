@@ -5,52 +5,59 @@ load_dotenv()
 
 
 class Config:
-    SECRET_KEY = os.getenv("FLASK_SECRET_KEY", "dev-insecure-secret-change-me")
-    SITE_TITLE = os.getenv("SITE_TITLE", "George Leeh | Portfolio")
-    CONTACT_EMAIL = os.getenv("CONTACT_EMAIL", "jobs@georgeleeh.com")
-    LINKEDIN_URL = os.getenv("LINKEDIN_URL", "https://www.linkedin.com")
+    SECRET_KEY = os.getenv("FLASK_SECRET_KEY")
+    SITE_TITLE = os.getenv("SITE_TITLE")
+    CONTACT_EMAIL = os.getenv("CONTACT_EMAIL")
+    LINKEDIN_URL = os.getenv("LINKEDIN_URL")
 
     PROFILE = {
         "name": "George Harris",
         "title": "Backend Developer · Data Platform & Analytics",
-        "location": "Portsmouth, UK / Remote",
+        "location": "Portsmouth, UK / Remote or Hybrid",
         "summary": (
             "Backend Developer at Retail Spotlight (Jan 2023 - Present) specializing in data-intensive backend systems. "
             "I manage warehousing architecture, build production data delivery pipelines, and maintain the Pinpoint "
-            "analytics platform for enterprise clients using Python, SQL, AWS (S3, Lambda, ECS, Athena), Docker, and Terraform."
+            "analytics platform for enterprise clients using Python, SQL, AWS (S3, Lambda, ECS, Athena), Docker, and Terraform. "
+            "Working in a small, fast-moving team with direct customer interaction and production ownership."
         ),
     }
 
     KEY_HIGHLIGHTS = [
-        "Contribute to backend development and warehouse operations across Amazon Redshift and PostgreSQL for the Pinpoint platform.",
-        "Process daily EPOS data sourced from roughly one-third of systems across the UK.",
-        "Redesigned pipelines/report generators and reduced daily failures to near zero.",
-        "Founder of StarrySkyMaps on Etsy (8 years), ranked #1 in Valentine's gifts in 2021.",
-        "Deliver analytics trusted by major brands including Red Bull and Mondelez.",
+        "Manage backend development and data warehouse operations on Amazon Redshift and PostgreSQL for the Pinpoint analytics platform.",
+        "Process billions of transactions daily across millions of products from thousands of individual EPOS systems and batch data providers.",
+        "Maintain terabytes of active warehouse storage with deep archival storage for historical analysis.",
+        "Work in small startup team with direct production ownership, customer interaction, and cross-functional collaboration.",
+        "Re-architected critical pipelines and report generators, reducing daily production failures to near-zero.",
+        "Founded and scaled StarrySkyMaps on Etsy for 8 years, achieving #1 ranking in Valentine's gifts category (2021).",
     ]
 
     SKILLS = [
         "Python",
         "SQL",
-        "Machine Learning",
-        "Data Pipelines",
-        "Data Warehousing",
+        "AWS (S3, Lambda, ECS, Athena)",
         "Amazon Redshift",
         "PostgreSQL",
-        "AWS (S3, Lambda, ECS, Athena)",
-        "Terraform",
         "Docker",
-        "Raspberry Pi",
-        "Hardware Test Automation",
-        "BOM Management",
-        "Flask",
-        "Etsy API Integrations",
-        "Google Maps API",
-        "Workflow Automation",
+        "Terraform",
+        "Data Pipelines",
+        "pandas",
         "ETL / ELT",
+        "Data Warehousing",
+        "boto3",
+        "NumPy",
+        "pytest",
+        "Grafana",
+        "Git / Version Control",
+        "Bitbucket / CI/CD",
+        "Monitoring & Observability",
         "Analytics Platform Engineering",
-        "CI/CD",
-        "Monitoring & Reliability",
+        "Flask",
+        "SciPy",
+        "Machine Learning",
+        "API Integration",
+        "Workflow Automation",
+        "Hardware Test Automation",
+        "Raspberry Pi",
     ]
 
     EXPERIENCE = [
@@ -59,11 +66,16 @@ class Config:
             "role": "Backend Developer",
             "period": "Jan 2023 - Present",
             "bullets": [
-                "Contribute to the Pinpoint backend platform, working with Amazon Redshift for warehousing and PostgreSQL for configuration and operational metadata.",
-                "Design and run daily delivery pipelines using AWS Lambda, ECS, and S3 to ingest EPOS data at UK national scale (roughly one-third of UK systems).",
-                "Re-architected pipelines and report generators, cutting daily failures to near zero and improving operational confidence.",
-                "Maintain Pinpoint analytics systems consumed by global brands (including Red Bull and Mondelez) and stock trading firms.",
-                "Build reproducible, resilient workflows with Python, SQL, AWS (Lambda, ECS, S3, Athena), Docker, and Terraform.",
+                "Manage backend development for the Pinpoint analytics platform, utilizing Amazon Redshift for data warehousing and PostgreSQL for configuration and operational metadata.",
+                "Architect and maintain batch data pipelines processing billions of transactions daily across millions of products from thousands of individual EPOS systems.",
+                "Work autonomously in small startup team environment with direct production ownership, customer interaction, and requirement gathering from enterprise clients.",
+                "Collaborate with internal data and analytics teams to develop tooling, respond to bug reports, and deliver customer-facing solutions.",
+                "Maintain terabytes of active warehouse storage with deep archival infrastructure for historical analysis.",
+                "Re-architected critical pipelines and report generators, reducing daily production failures from frequent occurrences to near-zero.",
+                "Migrated legacy Node.js data parser to version-controlled Python, improving performance, operational visibility, and cost efficiency.",
+                "Design and maintain Grafana dashboards for production monitoring, pipeline health tracking, and performance optimization.",
+                "Regularly present technical concepts to cross-functional teams, including data development processes and raw data structures.",
+                "Implement production-grade workflows using Python (pandas, NumPy, SciPy, pytest), SQL, AWS services (boto3), Docker, Terraform, and Bitbucket CI/CD.",
             ],
         },
         {
@@ -71,22 +83,24 @@ class Config:
             "role": "Teacher of Mathematics & Computer Science",
             "period": "Sep 2022 - Jan 2023",
             "bullets": [
-                "Delivered Mathematics and Computer Science lessons with structured planning, assessment, and targeted feedback.",
-                "Used practical programming examples to teach computational thinking and problem decomposition.",
-                "Recognized for leadership potential and offered the position of Head of IT prior to returning to industry engineering work.",
+                "Delivered Mathematics and Computer Science curriculum with structured lesson planning, formative assessment, and differentiated instruction.",
+                "Used practical programming examples to teach computational thinking, algorithm design, and problem decomposition.",
+                "Recognized for leadership potential and offered Head of IT position prior to returning to software engineering.",
+                "Developed communication skills translating complex technical concepts for varied audiences.",
             ],
         },
         {
             "company": "StarrySkyMaps (Etsy)",
-            "role": "Founder / Backend Engineer",
+            "role": "Founder / Software Engineer",
             "period": "2018 - Present",
             "bullets": [
-                "Built and operated an Etsy store for 8 years selling code-generated constellation posters, originally created as a personal gift idea.",
-                "Scaled the store to #1 in Valentine's gifts on Etsy in 2021 through product automation and customer-focused personalization.",
-                "Designed a custom database and API layer to extend Etsy's limited personalization options beyond a single free-text input.",
-                "Built a self-hosted buyer portal where customers receive an instant email link, submit validated form data, and use Google API-powered location lookup.",
-                "Engineered an event-driven fulfillment workflow that orchestrates poster rendering, approval state transitions, Etsy order status updates, and transactional customer notifications.",
-                "Implemented secure, time-bound asset delivery with expiring download access, persistence controls, and automated lifecycle handling for generated poster files.",
+                "Founded and operated Etsy store for 8 years selling algorithmically-generated constellation posters, scaling to #1 in Valentine's gifts category (2021).",
+                "Designed custom database and API layer extending Etsy's personalization capabilities beyond single free-text inputs.",
+                "Built self-service buyer portal with Google Maps API integration for location validation and instant customer access via transactional email.",
+                "Engineered event-driven fulfillment workflow orchestrating poster generation, approval workflows, Etsy order updates, and automated customer notifications.",
+                "Implemented secure asset delivery system with time-bound download access and automated lifecycle management.",
+                "Reduced order processing time from hours to minutes through end-to-end automation, enabling sustainable solo operation.",
+                "Presented business and technical case studies demonstrating entrepreneurial software engineering.",
             ],
         },
         {
@@ -94,11 +108,11 @@ class Config:
             "role": "Production Engineer Intern",
             "period": "Aug 2019 - Aug 2020",
             "bullets": [
-                "Owned factory communications and BOM management to support stable production of music-technology hardware.",
-                "Developed hardware test suites in Focusrite's custom PyFactory platform running on Raspberry Pis deployed in East Asia.",
-                "Enabled remote test updates and monitoring across factory lines, improving responsiveness and production quality control.",
-                "Supported test and process reliability that contributed to exceptionally low product return rates.",
-                "Built hardware test solutions for touch-sensitive MIDI devices.",
+                "Managed factory communications and Bill of Materials (BOM) coordination supporting production of professional audio hardware.",
+                "Developed automated hardware test suites using Focusrite's PyFactory platform deployed on Raspberry Pi hardware in East Asian manufacturing facilities.",
+                "Enabled remote test deployment and real-time monitoring across international factory lines, improving quality control responsiveness.",
+                "Contributed to production reliability initiatives that maintained exceptionally low product return rates (sub-0.5%).",
+                "Built test solutions for touch-sensitive MIDI controller devices requiring precise calibration and validation.",
             ],
         },
     ]
@@ -117,61 +131,15 @@ class Config:
             "qualification": "MEng Electronic Engineering with Music Technology Systems",
             "period": "Sep 2017 - Jul 2021",
             "notes": [
-                "Graduated with a 2:1 classification.",
+                "Graduated with 2:1 classification (Upper Second-Class Honours).",
                 "Specialized in Machine Learning and Biologically Inspired Computing.",
-                "Dissertation: 'Using Machine Learning to Provide an Objective Measure of Speech Intelligibility in Dysarthric Speakers' (80%+).",
-                "Additional advanced work included robotics, sonification of weather telemetry, real-time audio signal analysis, and sentiment analysis in mobile applications.",
+                "Dissertation: 'Using Machine Learning to Provide an Objective Measure of Speech Intelligibility in Dysarthric Speakers' (First Class, 80%+).",
+                "Advanced coursework in robotics, real-time audio signal processing, weather telemetry sonification, and mobile application sentiment analysis.",
             ],
         },
     ]
 
     PROJECTS = [
-        {
-            "name": "Portfolio Website",
-            "slug": "portfolio-website",
-            "description": "Personal portfolio site developed rapidly using AI tooling while maintaining clean, maintainable code architecture. Custom design system with PDF resume generation, mobile-responsive layouts, and modular Flask structure.",
-            "stack": ["Python", "Flask", "ReportLab", "HTML/CSS", "JavaScript"],
-            "link": "https://georgeleeh.com",
-            "details": [
-                "Leveraged AI pair programming to accelerate development while maintaining code quality and architectural consistency.",
-                "Built a custom dark-themed design system from scratch, removing Bootstrap dependency for a unique, performance-focused aesthetic.",
-                "Implemented dynamic PDF resume generation using ReportLab with sophisticated layout algorithms for text wrapping, spacing, and multi-column design.",
-                "Created a fully responsive mobile-first interface with custom navigation, timeline components, and skill visualization.",
-                "Structured as a modular Flask application with separation of concerns: configuration, routes, templates, and static assets.",
-                "Demonstrates practical application of modern web development practices while showcasing personality and technical breadth.",
-            ],
-        },
-        {
-            "name": "ML Dissertation: Speech Intelligibility in Dysarthric Speakers",
-            "slug": "ml-speech-intelligibility",
-            "description": "Research project applying machine learning to create an objective measure of speech intelligibility, awarded a dissertation mark above 80%.",
-            "stack": ["Machine Learning", "Python", "Signal Processing", "Research"],
-            "link": "#",
-            "details": [
-                "Developed machine learning models to objectively measure speech intelligibility in individuals with dysarthria.",
-                "Applied signal processing techniques to extract acoustic features from speech samples.",
-                "Conducted comprehensive literature review of existing assessment methods and their limitations.",
-                "Trained and evaluated multiple ML approaches including neural networks and traditional classifiers.",
-                "Achieved dissertation mark above 80%, demonstrating research rigor and technical execution.",
-                "Contributed to the broader field of accessible technology and speech therapy assessment tools.",
-            ],
-        },
-        {
-            "name": "StarrySkyMaps Automation Platform",
-            "slug": "starrymaps-automation",
-            "description": "End-to-end order personalization platform for Etsy constellation posters with instant buyer portal access, Google location integration, automated poster rendering, approval workflow, Etsy order closure, and timed digital delivery.",
-            "stack": ["Python", "Flask", "SQL", "Etsy API", "Google Maps API", "Email Automation"],
-            "link": "https://etsy.com/shop/StarrySkyMaps",
-            "details": [
-                "Built an event-driven workflow system triggered by Etsy webhook events for new orders.",
-                "Integrated Google Maps API to validate and geocode customer-provided locations automatically.",
-                "Automated poster rendering pipeline that generates personalized constellation maps from astronomical data.",
-                "Created secure buyer portal with instant email delivery, allowing customers to view drafts and provide feedback.",
-                "Implemented approval workflow that automatically marks Etsy orders as complete and schedules digital delivery.",
-                "Scaled to handle 8 years of continuous operation with peak performance during Valentine's season (ranked #1 Valentine's gifts category in 2021).",
-                "Reduced manual intervention from hours per order to minutes, enabling sustainable solo operation of the business.",
-            ],
-        },
         {
             "name": "Pinpoint Data Delivery Pipelines",
             "slug": "pinpoint-data-pipelines",
@@ -218,6 +186,52 @@ class Config:
                 "Introduced automated testing covering critical data transformation paths and business logic.",
                 "Reduced daily pipeline failures from multiple occurrences to near-zero, restoring confidence in decision-critical metrics.",
                 "Documented operational runbooks and incident response procedures for sustainable reliability.",
+            ],
+        },
+        {
+            "name": "StarrySkyMaps Automation Platform",
+            "slug": "starrymaps-automation",
+            "description": "End-to-end order personalization platform for Etsy constellation posters with instant buyer portal access, Google location integration, automated poster rendering, approval workflow, Etsy order closure, and timed digital delivery.",
+            "stack": ["Python", "Flask", "SQL", "Etsy API", "Google Maps API", "Email Automation"],
+            "link": "https://etsy.com/shop/StarrySkyMaps",
+            "details": [
+                "Built an event-driven workflow system triggered by Etsy webhook events for new orders.",
+                "Integrated Google Maps API to validate and geocode customer-provided locations automatically.",
+                "Automated poster rendering pipeline that generates personalized constellation maps from astronomical data.",
+                "Created secure buyer portal with instant email delivery, allowing customers to view drafts and provide feedback.",
+                "Implemented approval workflow that automatically marks Etsy orders as complete and schedules digital delivery.",
+                "Scaled to handle 8 years of continuous operation with peak performance during Valentine's season (ranked #1 Valentine's gifts category in 2021).",
+                "Reduced manual intervention from hours per order to minutes, enabling sustainable solo operation of the business.",
+            ],
+        },
+        {
+            "name": "ML Dissertation: Speech Intelligibility in Dysarthric Speakers",
+            "slug": "ml-speech-intelligibility",
+            "description": "Research project applying machine learning to create an objective measure of speech intelligibility, awarded a dissertation mark above 80%.",
+            "stack": ["Machine Learning", "Python", "Signal Processing", "Research"],
+            "link": "#",
+            "details": [
+                "Developed machine learning models to objectively measure speech intelligibility in individuals with dysarthria.",
+                "Applied signal processing techniques to extract acoustic features from speech samples.",
+                "Conducted comprehensive literature review of existing assessment methods and their limitations.",
+                "Trained and evaluated multiple ML approaches including neural networks and traditional classifiers.",
+                "Achieved dissertation mark above 80%, demonstrating research rigor and technical execution.",
+                "Contributed to the broader field of accessible technology and speech therapy assessment tools.",
+            ],
+        },
+        {
+            "name": "Portfolio Website",
+            "slug": "portfolio-website",
+            "description": "Personal portfolio site developed rapidly using AI tooling while maintaining clean, maintainable code architecture. Custom design system with PDF resume generation, mobile-responsive layouts, and modular Flask structure.",
+            "stack": ["Python", "Flask", "ReportLab", "HTML/CSS", "JavaScript"],
+            "link": "https://georgeleeh.com",
+            "details": [
+                "Leveraged AI pair programming to accelerate development while maintaining code quality and architectural consistency.",
+                "Built a custom dark-themed design system from scratch, removing Bootstrap dependency for a unique, performance-focused aesthetic.",
+                "Implemented dynamic PDF resume generation using ReportLab with sophisticated layout algorithms for text wrapping, spacing, and multi-column design.",
+                "Created a fully responsive mobile-first interface with custom navigation, timeline components, and skill visualization.",
+                "Structured as a modular Flask application with separation of concerns: configuration, routes, templates, and static assets.",
+                "Demonstrates practical application of modern web development practices while showcasing personality and technical breadth.",
             ],
         },
         {
