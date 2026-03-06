@@ -14,7 +14,6 @@ def _build_resume_pdf() -> BytesIO:
     experience = current_app.config["EXPERIENCE"]
     skills = current_app.config["SKILLS"]
     contact_email = current_app.config["CONTACT_EMAIL"]
-    github_url = current_app.config["GITHUB_URL"]
     linkedin_url = current_app.config["LINKEDIN_URL"]
 
     buffer = BytesIO()
@@ -107,7 +106,7 @@ def _build_resume_pdf() -> BytesIO:
         pdf.setFont("Helvetica", 8)
         pdf.setFillColor(muted)
         pdf.drawString(margin, 24, "Resume generated from live portfolio data")
-        pdf.drawRightString(width - margin, 24, "github.com/georgeleeh · linkedin")
+        pdf.drawRightString(width - margin, 24, "linkedin")
 
     draw_page_chrome()
     y = height - 80
@@ -168,7 +167,7 @@ def _build_resume_pdf() -> BytesIO:
     left_y = section_title("Links", left_x, left_y, left_w)
     pdf.setFillColor(muted)
     pdf.setFont("Helvetica", 8)
-    for link_line in [github_url, linkedin_url, "Portfolio: georgeleeh.com"]:
+    for link_line in [linkedin_url, "Portfolio: georgeleeh.com"]:
         for link_text_line in wrap_text(link_line, "Helvetica", 8, left_w - 10):
             pdf.drawString(left_x + 6, left_y, link_text_line)
             left_y -= 11

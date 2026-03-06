@@ -7,8 +7,7 @@ load_dotenv()
 class Config:
     SECRET_KEY = os.getenv("FLASK_SECRET_KEY", "dev-insecure-secret-change-me")
     SITE_TITLE = os.getenv("SITE_TITLE", "George Leeh | Portfolio")
-    CONTACT_EMAIL = os.getenv("CONTACT_EMAIL", "hello@georgeleeh.com")
-    GITHUB_URL = os.getenv("GITHUB_URL", "https://github.com/georgeleeh")
+    CONTACT_EMAIL = os.getenv("CONTACT_EMAIL", "jobs@georgeleeh.com")
     LINKEDIN_URL = os.getenv("LINKEDIN_URL", "https://www.linkedin.com")
 
     PROFILE = {

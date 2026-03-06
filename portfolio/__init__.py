@@ -27,7 +27,6 @@ def create_app() -> Flask:
         return {
             "site_title": app.config["SITE_TITLE"],
             "contact_email": app.config["CONTACT_EMAIL"],
-            "github_url": app.config["GITHUB_URL"],
             "linkedin_url": app.config["LINKEDIN_URL"],
             "current_year": datetime.now(timezone.utc).year,
         }
