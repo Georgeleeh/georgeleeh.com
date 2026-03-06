@@ -127,6 +127,12 @@ class Config:
 
     PROJECTS = [
         {
+            "name": "Portfolio Website",
+            "description": "Personal portfolio site developed rapidly using AI tooling while maintaining clean, maintainable code architecture. Custom design system with PDF resume generation, mobile-responsive layouts, and modular Flask structure.",
+            "stack": ["Python", "Flask", "ReportLab", "HTML/CSS", "JavaScript"],
+            "link": "https://georgeleeh.com",
+        },
+        {
             "name": "ML Dissertation: Speech Intelligibility in Dysarthric Speakers",
             "description": "Research project applying machine learning to create an objective measure of speech intelligibility, awarded a dissertation mark above 80%.",
             "stack": ["Machine Learning", "Python", "Signal Processing", "Research"],
