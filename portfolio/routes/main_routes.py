@@ -12,6 +12,7 @@ def _build_resume_pdf() -> BytesIO:
     profile = current_app.config["PROFILE"]
     highlights = current_app.config["KEY_HIGHLIGHTS"]
     experience = current_app.config["EXPERIENCE"]
+    education = current_app.config["EDUCATION"]
     skills = current_app.config["SKILLS"]
     contact_email = current_app.config["CONTACT_EMAIL"]
     linkedin_url = current_app.config["LINKEDIN_URL"]
@@ -173,6 +174,32 @@ def _build_resume_pdf() -> BytesIO:
             left_y -= 11
         left_y -= 2
 
+    left_y -= 4
+    left_y = section_title("Education", left_x, left_y, left_w)
+    pdf.setFillColor(muted)
+    pdf.setFont("Helvetica-Bold", 8)
+    for item in education:
+        degree_lines = wrap_text(item["qualification"], "Helvetica-Bold", 8, left_w - 10)
+        for degree_line in degree_lines:
+            if left_y < 70:
+                break
+            pdf.drawString(left_x + 6, left_y, degree_line)
+            left_y -= 10
+
+        pdf.setFont("Helvetica", 8)
+        if left_y >= 70:
+            pdf.drawString(left_x + 6, left_y, item["period"])
+            left_y -= 10
+
+        institution_lines = wrap_text(item["institution"], "Helvetica", 8, left_w - 10)
+        for institution_line in institution_lines:
+            if left_y < 70:
+                break
+            pdf.drawString(left_x + 6, left_y, institution_line)
+            left_y -= 10
+        left_y -= 4
+        pdf.setFont("Helvetica-Bold", 8)
+
     # Right column: timeline experience
     right_y = section_title("Experience Timeline", right_x, right_y, right_w)
     line_x = right_x + 8
@@ -243,6 +270,7 @@ def resume():
         skills=current_app.config["SKILLS"],
         highlights=current_app.config["KEY_HIGHLIGHTS"],
         experience=current_app.config["EXPERIENCE"],
+        education=current_app.config["EDUCATION"],
     )
 
 

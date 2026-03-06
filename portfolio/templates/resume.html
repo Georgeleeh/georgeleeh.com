@@ -43,4 +43,26 @@
     {% endfor %}
   </div>
 </section>
+
+<section class="resume-section">
+  <h2>Education & Qualifications</h2>
+  <div class="timeline">
+    {% for item in education %}
+    <article class="timeline-item">
+      <div class="role-row">
+        <strong>{{ item.qualification }}</strong>
+        <span>{{ item.period }}</span>
+      </div>
+      <p><em>{{ item.institution }}</em></p>
+      {% if item.notes %}
+      <ul>
+        {% for note in item.notes %}
+        <li>{{ note }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}
