@@ -26,6 +26,15 @@
     </div>
     {% endif %}
 
+    {% if project.download_url %}
+    <div class="detail-section detail-cta">
+      <h3>Download Dissertation</h3>
+      <a class="btn-primary" href="{{ project.download_url }}">
+        Download PDF ↓
+      </a>
+    </div>
+    {% endif %}
+
     <div class="detail-section">
       <h3>Technology Stack</h3>
       <div class="stack-wrap">

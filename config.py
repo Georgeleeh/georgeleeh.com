@@ -210,6 +210,7 @@ class Config:
             "description": "Research project applying machine learning to create an objective measure of speech intelligibility, awarded a dissertation mark above 80%.",
             "stack": ["Machine Learning", "Python", "Signal Processing", "Research"],
             "link": "#",
+            "download_url": "/dissertation/download",
             "details": [
                 "Developed machine learning models to objectively measure speech intelligibility in individuals with dysarthria.",
                 "Applied signal processing techniques to extract acoustic features from speech samples.",

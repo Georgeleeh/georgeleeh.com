@@ -336,3 +336,13 @@ def download_resume():
         download_name=filename,
         mimetype="application/pdf",
     )
+
+
+@main_bp.route("/dissertation/download")
+def download_dissertation():
+    return send_file(
+        "static/data/Final Dissertation.pdf",
+        as_attachment=True,
+        download_name="George_Harris_ML_Dissertation_Speech_Intelligibility.pdf",
+        mimetype="application/pdf",
+    )
