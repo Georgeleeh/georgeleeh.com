@@ -346,6 +346,10 @@ p {
   margin: 0;
 }
 
+.page-intro p:has(.btn) {
+  margin-top: 1.2rem;
+}
+
 .card-shell {
   background: var(--panel);
   border: 1px solid var(--border);
