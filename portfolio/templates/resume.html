@@ -1,34 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="mb-4">
-  <p class="eyebrow mb-2">Professional Snapshot</p>
-  <h1 class="display-6 fw-bold mb-1">Resume</h1>
-  <p class="text-muted">{{ profile.name }} · {{ profile.title }} · {{ profile.location }}</p>
+<section class="page-intro">
+  <p class="eyebrow">Career Snapshot</p>
+  <h1>Resume</h1>
+  <p>{{ profile.name }} · {{ profile.title }} · {{ profile.location }}</p>
+  <p><a class="btn btn-primary" href="{{ url_for('main.download_resume') }}">Download PDF Resume</a></p>
 </section>
 
-<section class="mb-4">
-  <div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
-      <h2 class="h5 mb-3">Key Highlights</h2>
-      <ul class="mb-0 highlights-compact">
+<section class="card-shell">
+  <h2>Key Highlights</h2>
+  <ul class="highlights-compact">
         {% for item in highlights %}
-        <li class="mb-2">{{ item }}</li>
+        <li>{{ item }}</li>
         {% endfor %}
-      </ul>
-    </div>
-  </div>
+  </ul>
 </section>
 
-<section class="mb-5">
-  <h2 class="h4">Experience</h2>
-  <div class="timeline mt-3">
+<section class="resume-section">
+  <h2>Experience</h2>
+  <div class="timeline">
     {% for item in experience %}
-    <article class="timeline-item p-3 p-lg-4 rounded-3 bg-white shadow-sm">
-      <div class="d-flex justify-content-between flex-wrap gap-2">
+    <article class="timeline-item">
+      <div class="role-row">
         <strong>{{ item.role }} · {{ item.company }}</strong>
-        <span class="text-muted">{{ item.period }}</span>
+        <span>{{ item.period }}</span>
       </div>
-      <ul class="mt-2 mb-0">
+      <ul>
         {% for bullet in item.bullets %}
         <li>{{ bullet }}</li>
         {% endfor %}
@@ -38,9 +35,9 @@
   </div>
 </section>
 
-<section>
-  <h2 class="h4">Skills</h2>
-  <div class="d-flex flex-wrap gap-2 mt-2">
+<section class="resume-section">
+  <h2>Skills</h2>
+  <div class="skill-cloud">
     {% for skill in skills %}
     <span class="chip">{{ skill }}</span>
     {% endfor %}

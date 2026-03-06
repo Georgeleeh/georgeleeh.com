@@ -1,20 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="hero-card p-4 p-lg-5 mb-5 text-center">
-  <div class="row justify-content-center">
-    <div class="col-lg-10 col-xl-8">
-      <p class="eyebrow mb-2">Backend Developer • Data Platform • Analytics</p>
-      <h1 class="display-4 fw-bold mb-3">{{ profile.name }}</h1>
-      <p class="lead mb-2">{{ profile.title }}</p>
-      <p class="text-muted mb-4">{{ profile.location }}</p>
-      <p class="mb-4 hero-summary-condensed">Backend Developer at Retail Spotlight managing the Pinpoint data platform. I build reliable pipelines, own warehouse operations, and deliver analytics trusted by enterprise clients.</p>
-      <div class="d-flex gap-3 flex-wrap justify-content-center">
-        <a class="btn btn-primary btn-lg px-4" href="{{ url_for('main.resume') }}">View Resume</a>
-        <a class="btn btn-outline-light btn-lg px-4" href="{{ url_for('main.projects') }}">View Projects</a>
-        <a class="btn btn-outline-light btn-lg px-4" href="{{ url_for('main.contact') }}">Contact</a>
-      </div>
+<section class="hero-card">
+  <div class="hero-main">
+    <p class="eyebrow">Data Platform • Backend • Cloud</p>
+    <h1>Hi, I'm {{ profile.name }}.</h1>
+    <p class="hero-subtitle">I make large-scale retail data useful, reliable, and decision-ready.</p>
+    <p class="hero-summary-condensed">Backend Developer at Retail Spotlight, building the Pinpoint platform with Python, SQL, AWS, Docker, and Terraform.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="{{ url_for('main.resume') }}">View Resume</a>
+      <a class="btn btn-ghost" href="{{ url_for('main.download_resume') }}">Download PDF</a>
+      <a class="btn btn-ghost" href="{{ url_for('main.projects') }}">See Projects</a>
+      <a class="btn btn-ghost" href="{{ url_for('main.contact') }}">Say Hello</a>
     </div>
   </div>
+
+  <aside class="hero-side">
+    <h2>Quick Facts</h2>
+    <ul class="fact-list">
+      <li>🏢 Pinpoint platform owner at Retail Spotlight</li>
+      <li>🇬🇧 Data sourced daily from ~⅓ of UK EPOS systems</li>
+      <li>🛡️ Pipeline failures reduced to near-zero</li>
+      <li>📊 Trusted by Red Bull, Mondelez, and trading firms</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="skill-strip">
+  {% for skill in skills[:8] %}
+  <span class="skill-pill">{{ skill }}</span>
+  {% endfor %}
+</section>
+
+<section class="mini-projects">
+  <div class="section-head">
+    <h2>Selected Work</h2>
+    <a href="{{ url_for('main.projects') }}">View all →</a>
+  </div>
+  <div class="mini-grid">
+    {% for project in featured_projects %}
+    <article class="mini-card">
+      <h3>{{ project.name }}</h3>
+      <p>{{ project.description }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="fun-note">
+  <p>Outside of shipping data systems, I enjoy turning chaotic workflows into calm dashboards.</p>
+</section>
+
+<section class="location-note">
+  <span>{{ profile.location }}</span>
+  <span>Open to backend and data platform opportunities</span>
 </section>
 
 {% endblock %}

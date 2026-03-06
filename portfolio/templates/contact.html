@@ -1,18 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="contact-wrap" style="max-width: 760px;">
-  <p class="eyebrow mb-2">Let's Connect</p>
-  <h1 class="display-6 fw-bold mb-3">Contact</h1>
-  <p class="mb-4 text-muted">Interested in working together or discussing an opportunity? Reach out and I will get back to you soon.</p>
-  <div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
-      <p class="mb-3"><strong>Email:</strong> <a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
-      <div class="d-flex flex-wrap gap-2 mb-2">
-        <a class="btn btn-dark" href="{{ github_url }}" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn btn-primary" href="{{ linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
-      <p class="small text-muted mb-0">Open to full-time roles, contract work, and technical consulting.</p>
+<section class="page-intro">
+  <p class="eyebrow">Let's Connect</p>
+  <h1>Contact</h1>
+  <p>Want to talk data platforms, backend engineering, or an opportunity? I'd love to hear from you.</p>
+</section>
+
+<section class="contact-grid">
+  <article class="card-shell">
+    <h2>Email</h2>
+    <p>Best for opportunities and project discussions.</p>
+    <a class="project-link" href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+  </article>
+
+  <article class="card-shell">
+    <h2>Profiles</h2>
+    <p>Want a quick background check? Start here.</p>
+    <div class="link-row">
+      <a class="btn btn-ghost" href="{{ github_url }}" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-primary" href="{{ linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
     </div>
-  </div>
+  </article>
+</section>
+
+<section class="fun-note">
+  <p>Usually online with a coffee and a backlog of SQL ideas.</p>
 </section>
 {% endblock %}
