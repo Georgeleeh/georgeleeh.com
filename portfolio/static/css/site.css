@@ -456,6 +456,120 @@ p {
   text-decoration: underline;
 }
 
+.project-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.project-card-link:hover .read-more {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.read-more {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: #9ec3ff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.project-detail-content {
+  max-width: 800px;
+}
+
+.detail-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.detail-section {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.8rem;
+}
+
+.detail-section h2 {
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  color: var(--text);
+  font-size: 1.5rem;
+}
+
+.detail-section h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--text);
+  font-size: 1.25rem;
+}
+
+.detail-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.detail-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.detail-cta {
+  text-align: center;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(135deg, #66d9ff 0%, #9f7aea 100%);
+  color: var(--bg);
+  font-weight: 700;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(102, 217, 255, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 217, 255, 0.4);
+}
+
+.detail-nav {
+  padding: 1.2rem 1.8rem;
+  text-align: center;
+}
+
+.back-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #9ec3ff;
+  text-decoration: underline;
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

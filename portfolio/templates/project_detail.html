@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro">
+  <p class="eyebrow">Project Details</p>
+  <h1>{{ project.name }}</h1>
+  <p class="intro-text">{{ project.description }}</p>
+</section>
+
+<section class="project-detail-content">
+  <div class="detail-main">
+    <div class="detail-section">
+      <h2>Technical Approach</h2>
+      <ul class="detail-list">
+        {% for detail in project.details %}
+        <li>{{ detail }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% if project.link and project.link != '#' %}
+    <div class="detail-section detail-cta">
+      <h3>Visit Project</h3>
+      <a class="btn-primary" href="{{ project.link }}" target="_blank" rel="noopener">
+        Open Project ↗
+      </a>
+    </div>
+    {% endif %}
+
+    <div class="detail-section">
+      <h3>Technology Stack</h3>
+      <div class="stack-wrap">
+        {% for tech in project.stack %}
+        <span class="chip">{{ tech }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="detail-section detail-nav">
+      <a href="{{ url_for('main.projects') }}" class="back-link">← Back to all projects</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

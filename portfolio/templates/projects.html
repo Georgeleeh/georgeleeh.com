@@ -9,18 +9,18 @@
 <section class="project-grid">
   {% for project in projects %}
   <article class="project-card">
-    <div>
-        <h2>{{ project.name }}</h2>
-        <p>{{ project.description }}</p>
-        <div class="stack-wrap">
-          {% for tech in project.stack %}
-          <span class="chip chip-subtle">{{ tech }}</span>
-          {% endfor %}
-        </div>
-        {% if project.link and project.link != '#' %}
-        <a class="project-link" href="{{ project.link }}" target="_blank" rel="noopener">Open project ↗</a>
-        {% endif %}
-    </div>
+    <a href="{{ url_for('main.project_detail', slug=project.slug) }}" class="project-card-link">
+      <div>
+          <h2>{{ project.name }}</h2>
+          <p>{{ project.description }}</p>
+          <div class="stack-wrap">
+            {% for tech in project.stack %}
+            <span class="chip chip-subtle">{{ tech }}</span>
+            {% endfor %}
+          </div>
+          <span class="read-more">View details →</span>
+      </div>
+    </a>
   </article>
   {% endfor %}
 </section>

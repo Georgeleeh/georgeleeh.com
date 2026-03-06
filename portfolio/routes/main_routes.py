@@ -279,6 +279,15 @@ def projects():
     return render_template("projects.html", projects=current_app.config["PROJECTS"])
 
 
+@main_bp.route("/projects/<slug>")
+def project_detail(slug):
+    all_projects = current_app.config["PROJECTS"]
+    project = next((p for p in all_projects if p.get("slug") == slug), None)
+    if not project:
+        return "Project not found", 404
+    return render_template("project_detail.html", project=project)
+
+
 @main_bp.route("/contact")
 def contact():
     return render_template("contact.html")
