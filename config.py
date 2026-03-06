@@ -97,7 +97,7 @@ class Config:
                 "Owned factory communications and BOM management to support stable production of music-technology hardware.",
                 "Developed hardware test suites in Focusrite's custom PyFactory platform running on Raspberry Pis deployed in East Asia.",
                 "Enabled remote test updates and monitoring across factory lines, improving responsiveness and production quality control.",
-                "Supported test and process reliability that contributed to product return rates below 0.5%.",
+                "Supported test and process reliability that contributed to exceptionally low product return rates.",
                 "Built hardware test solutions for touch-sensitive MIDI devices.",
             ],
         },
