@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
+{% if available_for_work %}
+<div class="status-banner">
+  <span class="status-indicator"></span>
+  <span class="status-text">Open to interesting opportunities</span>
+</div>
+{% endif %}
+
 <section class="hero-card">
   <div class="hero-main">
     <p class="eyebrow">Data Platform • Backend • Cloud</p>

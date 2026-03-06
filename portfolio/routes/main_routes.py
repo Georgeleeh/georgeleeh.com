@@ -1,6 +1,6 @@
 from io import BytesIO
 
-from flask import Blueprint, current_app, render_template, send_file
+from flask import Blueprint, current_app, make_response, render_template, send_file, url_for
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
@@ -292,6 +292,7 @@ def home():
         skills=current_app.config["SKILLS"],
         highlights=current_app.config["KEY_HIGHLIGHTS"],
         featured_projects=current_app.config["PROJECTS"][:2],
+        available_for_work=current_app.config.get("AVAILABLE_FOR_WORK", False),
     )
 
 
@@ -346,3 +347,41 @@ def download_dissertation():
         download_name="George_Harris_ML_Dissertation_Speech_Intelligibility.pdf",
         mimetype="application/pdf",
     )
+
+
+@main_bp.route("/sitemap.xml")
+def sitemap():
+    pages = [
+        {"loc": url_for("main.home", _external=True), "priority": "1.0"},
+        {"loc": url_for("main.resume", _external=True), "priority": "0.9"},
+        {"loc": url_for("main.projects", _external=True), "priority": "0.8"},
+        {"loc": url_for("main.contact", _external=True), "priority": "0.7"},
+    ]
+    
+    # Add project detail pages
+    for project in current_app.config["PROJECTS"]:
+        pages.append({
+            "loc": url_for("main.project_detail", slug=project["slug"], _external=True),
+            "priority": "0.6"
+        })
+    
+    sitemap_xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    sitemap_xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for page in pages:
+        sitemap_xml += '  <url>\n'
+        sitemap_xml += f'    <loc>{page["loc"]}</loc>\n'
+        sitemap_xml += f'    <priority>{page["priority"]}</priority>\n'
+        sitemap_xml += '  </url>\n'
+    sitemap_xml += '</urlset>'
+    
+    response = make_response(sitemap_xml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
+
+@main_bp.route("/robots.txt")
+def robots():
+    robots_txt = f"""User-agent: *\nAllow: /\n\nSitemap: {url_for('main.sitemap', _external=True)}"""
+    response = make_response(robots_txt)
+    response.headers["Content-Type"] = "text/plain"
+    return response

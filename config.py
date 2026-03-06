@@ -9,6 +9,7 @@ class Config:
     SITE_TITLE = os.getenv("SITE_TITLE")
     CONTACT_EMAIL = os.getenv("CONTACT_EMAIL")
     LINKEDIN_URL = os.getenv("LINKEDIN_URL")
+    AVAILABLE_FOR_WORK = True
 
     PROFILE = {
         "name": "George Harris",
