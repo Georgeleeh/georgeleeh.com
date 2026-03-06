@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mb-4">
+  <p class="eyebrow mb-2">Professional Snapshot</p>
+  <h1 class="display-6 fw-bold mb-1">Resume</h1>
+  <p class="text-muted">{{ profile.name }} · {{ profile.title }} · {{ profile.location }}</p>
+</section>
+
+<section class="mb-4">
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+      <h2 class="h5 mb-3">Key Highlights</h2>
+      <ul class="mb-0 highlights-compact">
+        {% for item in highlights %}
+        <li class="mb-2">{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="mb-5">
+  <h2 class="h4">Experience</h2>
+  <div class="timeline mt-3">
+    {% for item in experience %}
+    <article class="timeline-item p-3 p-lg-4 rounded-3 bg-white shadow-sm">
+      <div class="d-flex justify-content-between flex-wrap gap-2">
+        <strong>{{ item.role }} · {{ item.company }}</strong>
+        <span class="text-muted">{{ item.period }}</span>
+      </div>
+      <ul class="mt-2 mb-0">
+        {% for bullet in item.bullets %}
+        <li>{{ bullet }}</li>
+        {% endfor %}
+      </ul>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section>
+  <h2 class="h4">Skills</h2>
+  <div class="d-flex flex-wrap gap-2 mt-2">
+    {% for skill in skills %}
+    <span class="chip">{{ skill }}</span>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

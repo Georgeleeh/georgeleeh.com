@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero-card p-4 p-lg-5 mb-5 text-center">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-8">
+      <p class="eyebrow mb-2">Backend Developer • Data Platform • Analytics</p>
+      <h1 class="display-4 fw-bold mb-3">{{ profile.name }}</h1>
+      <p class="lead mb-2">{{ profile.title }}</p>
+      <p class="text-muted mb-4">{{ profile.location }}</p>
+      <p class="mb-4 hero-summary-condensed">Backend Developer at Retail Spotlight managing the Pinpoint data platform. I build reliable pipelines, own warehouse operations, and deliver analytics trusted by enterprise clients.</p>
+      <div class="d-flex gap-3 flex-wrap justify-content-center">
+        <a class="btn btn-primary btn-lg px-4" href="{{ url_for('main.resume') }}">View Resume</a>
+        <a class="btn btn-outline-light btn-lg px-4" href="{{ url_for('main.projects') }}">View Projects</a>
+        <a class="btn btn-outline-light btn-lg px-4" href="{{ url_for('main.contact') }}">Contact</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
