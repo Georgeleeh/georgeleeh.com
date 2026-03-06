@@ -7,12 +7,14 @@ from flask import Flask
 from flask_cors import CORS
 
 from config import Config
+from .analytics import init_analytics_db
 
 
 def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(Config)
     CORS(app)
+    init_analytics_db(app)
 
     if not app.logger.handlers:
         logging.basicConfig(level=logging.INFO)
@@ -24,10 +26,12 @@ def create_app() -> Flask:
 
     @app.context_processor
     def inject_globals():
+        analytics_key = (app.config.get("ANALYTICS_DASHBOARD_KEY") or "").strip()
         return {
             "site_title": app.config["SITE_TITLE"],
             "contact_email": app.config["CONTACT_EMAIL"],
             "linkedin_url": app.config["LINKEDIN_URL"],
+            "analytics_public": not bool(analytics_key),
             "current_year": datetime.now(timezone.utc).year,
         }
 

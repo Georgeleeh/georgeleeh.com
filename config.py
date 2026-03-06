@@ -10,6 +10,8 @@ class Config:
     CONTACT_EMAIL = os.getenv("CONTACT_EMAIL")
     LINKEDIN_URL = os.getenv("LINKEDIN_URL")
     AVAILABLE_FOR_WORK = True
+    ANALYTICS_DB_PATH = os.getenv("ANALYTICS_DB_PATH")
+    ANALYTICS_DASHBOARD_KEY = os.getenv("ANALYTICS_DASHBOARD_KEY", "")
 
     PROFILE = {
         "name": "George Harris",

@@ -1,11 +1,22 @@
 from io import BytesIO
+import hmac
 
-from flask import Blueprint, current_app, make_response, render_template, send_file, url_for
+from flask import Blueprint, abort, current_app, jsonify, make_response, render_template, request, send_file, url_for
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
+from portfolio.analytics import get_metrics, track_event
+
 main_bp = Blueprint("main", __name__)
+
+
+def _is_analytics_authorized() -> bool:
+    configured_key = (current_app.config.get("ANALYTICS_DASHBOARD_KEY") or "").strip()
+    if not configured_key:
+        return True
+    provided_key = (request.args.get("key") or "").strip()
+    return hmac.compare_digest(provided_key, configured_key)
 
 
 def _build_resume_pdf() -> BytesIO:
@@ -329,6 +340,17 @@ def contact():
 
 @main_bp.route("/resume/download")
 def download_resume():
+    track_event(
+        current_app,
+        event_type="resume_download",
+        path=request.path,
+        referrer=request.referrer,
+        visitor_id=request.args.get("visitor_id"),
+        session_id=request.args.get("session_id"),
+        metadata={"source": "resume_download_route"},
+        user_agent=request.user_agent.string,
+        ip_address=request.remote_addr,
+    )
     pdf_buffer = _build_resume_pdf()
     filename = f"{current_app.config['PROFILE']['name'].replace(' ', '_')}_Resume.pdf"
     return send_file(
@@ -341,6 +363,17 @@ def download_resume():
 
 @main_bp.route("/dissertation/download")
 def download_dissertation():
+    track_event(
+        current_app,
+        event_type="dissertation_download",
+        path=request.path,
+        referrer=request.referrer,
+        visitor_id=request.args.get("visitor_id"),
+        session_id=request.args.get("session_id"),
+        metadata={"source": "dissertation_download_route"},
+        user_agent=request.user_agent.string,
+        ip_address=request.remote_addr,
+    )
     return send_file(
         "static/data/Final Dissertation.pdf",
         as_attachment=True,
@@ -381,7 +414,49 @@ def sitemap():
 
 @main_bp.route("/robots.txt")
 def robots():
-    robots_txt = f"""User-agent: *\nAllow: /\n\nSitemap: {url_for('main.sitemap', _external=True)}"""
+    robots_txt = f"""User-agent: *\nAllow: /\nDisallow: /analytics\n\nSitemap: {url_for('main.sitemap', _external=True)}"""
     response = make_response(robots_txt)
     response.headers["Content-Type"] = "text/plain"
     return response
+
+
+@main_bp.route("/analytics/collect", methods=["POST"])
+def analytics_collect():
+    payload = request.get_json(silent=True) or {}
+    event_type = (payload.get("event_type") or "").strip()
+    if not event_type:
+        return jsonify({"ok": False, "error": "event_type is required"}), 400
+
+    track_event(
+        current_app,
+        event_type=event_type,
+        path=payload.get("path") or request.path,
+        referrer=payload.get("referrer") or request.referrer,
+        visitor_id=payload.get("visitor_id"),
+        session_id=payload.get("session_id"),
+        metadata=payload.get("metadata") if isinstance(payload.get("metadata"), dict) else {},
+        user_agent=request.user_agent.string,
+        ip_address=request.remote_addr,
+    )
+    return jsonify({"ok": True})
+
+
+@main_bp.route("/analytics")
+def analytics_dashboard():
+    if not _is_analytics_authorized():
+        abort(403)
+
+    dashboard_key = (request.args.get("key") or "").strip()
+    days_param = request.args.get("days", "30")
+    try:
+        days = int(days_param)
+    except ValueError:
+        days = 30
+
+    metrics = get_metrics(current_app, days=days)
+    return render_template(
+        "analytics.html",
+        metrics=metrics,
+        active_days=metrics["days"],
+        dashboard_key=dashboard_key,
+    )

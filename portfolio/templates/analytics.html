@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block head %}
+<meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+{% block content %}
+<section class="page-intro">
+  <p class="eyebrow">Site Analytics</p>
+  <h1>Portfolio Traffic & Engagement</h1>
+  <p class="intro-text">Last {{ metrics.days }} days of first-party analytics.</p>
+  <p class="analytics-filters">
+    <a class="filter-link {% if active_days == 7 %}active{% endif %}" href="{{ url_for('main.analytics_dashboard', days=7, key=dashboard_key) if dashboard_key else url_for('main.analytics_dashboard', days=7) }}">7d</a>
+    <a class="filter-link {% if active_days == 30 %}active{% endif %}" href="{{ url_for('main.analytics_dashboard', days=30, key=dashboard_key) if dashboard_key else url_for('main.analytics_dashboard', days=30) }}">30d</a>
+    <a class="filter-link {% if active_days == 90 %}active{% endif %}" href="{{ url_for('main.analytics_dashboard', days=90, key=dashboard_key) if dashboard_key else url_for('main.analytics_dashboard', days=90) }}">90d</a>
+  </p>
+</section>
+
+<section class="analytics-kpis">
+  <article class="kpi-card">
+    <h3>Page Views</h3>
+    <p>{{ metrics.totals.page_views }}</p>
+  </article>
+  <article class="kpi-card">
+    <h3>Unique Visitors</h3>
+    <p>{{ metrics.totals.unique_visitors }}</p>
+  </article>
+  <article class="kpi-card">
+    <h3>Sessions</h3>
+    <p>{{ metrics.totals.sessions }}</p>
+  </article>
+  <article class="kpi-card">
+    <h3>Total Events</h3>
+    <p>{{ metrics.totals.total_events }}</p>
+  </article>
+</section>
+
+<section class="analytics-grid">
+  <article class="analytics-panel">
+    <h2>Top Pages</h2>
+    {% if metrics.top_pages %}
+    <ul class="analytics-list">
+      {% for item in metrics.top_pages %}
+      <li>
+        <span>{{ item.path }}</span>
+        <strong>{{ item.views }}</strong>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No page data yet.</p>
+    {% endif %}
+  </article>
+
+  <article class="analytics-panel">
+    <h2>Engagement Events</h2>
+    {% if metrics.engagement %}
+    <ul class="analytics-list">
+      {% for item in metrics.engagement %}
+      <li>
+        <span>{{ item.event_type }}</span>
+        <strong>{{ item.count }}</strong>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No engagement events yet.</p>
+    {% endif %}
+  </article>
+</section>
+
+<section class="analytics-panel analytics-panel-wide">
+  <h2>Daily Page Views</h2>
+  {% if metrics.daily_views %}
+  <div class="daily-chart">
+    {% set max_views = metrics.daily_views|map(attribute='views')|max %}
+    {% for item in metrics.daily_views %}
+    {% set height_pct = ((item.views / max_views) * 100) if max_views > 0 else 0 %}
+    <div class="chart-bar-wrap" title="{{ item.day }}: {{ item.views }} views">
+      <div class="chart-bar" style="--bar-height: {{ '%.2f'|format(height_pct) }}%;"></div>
+      <span>{{ item.day[5:] }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty-state">No daily data yet.</p>
+  {% endif %}
+</section>
+
+<section class="analytics-panel analytics-panel-wide">
+  <h2>Recent Events</h2>
+  {% if metrics.recent_events %}
+  <div class="table-wrap">
+    <table class="analytics-table">
+      <thead>
+        <tr>
+          <th>Time (UTC)</th>
+          <th>Event</th>
+          <th>Path</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in metrics.recent_events %}
+        <tr>
+          <td>{{ item.created_at[:19].replace('T', ' ') }}</td>
+          <td>{{ item.event_type }}</td>
+          <td>{{ item.path or '-' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="empty-state">No events yet.</p>
+  {% endif %}
+</section>
+{% endblock %}
