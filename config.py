@@ -197,6 +197,20 @@ class Config:
             ],
         },
         {
+            "name": "Python Test Data Factory Framework",
+            "slug": "python-test-data-factory-framework",
+            "description": "Built a reusable sample data factory framework to generate valid, normalized test data in a few readable lines, dramatically improving unit test speed and maintainability.",
+            "stack": ["Python", "pytest", "SQL", "Data Modeling", "Test Engineering"],
+            "link": "#",
+            "details": [
+                "<strong>The Problem:</strong> Our test suites depended on large, heavily normalized schemas with many non-nullable columns. In most unit tests, only a few fields were actually relevant, but developers still had to manually populate many unrelated columns and dependent dimension tables just to get one valid row.",
+                "<strong>The Goal:</strong> Make tests faster to write, easier to read, and less brittle by letting engineers specify only the values that matter to the scenario while automatically generating valid defaults everywhere else.",
+                "<strong>The Approach:</strong> I created a framework of Python factory classes that understand table relationships and required fields. Tests can override known-important values (including values in related dimension tables) while the framework fills non-essential columns with deterministic dummy data that always satisfies constraints.",
+                "<strong>Design Choices:</strong> Factories expose a concise API focused on intent (what is important for this test) rather than schema mechanics (how every foreign key and non-null column is populated). Builders compose across normalized tables so one call can produce a complete, valid graph of records.",
+                "<strong>Outcome:</strong> Test setup shrank from verbose multi-table fixtures to a few clear lines, improving readability and onboarding for new developers. We reduced fixture noise, sped up authoring, and made unit tests more robust by standardizing how valid sample data is generated.",
+            ],
+        },
+        {
             "name": "StarrySkyMaps Automation Platform",
             "slug": "starrymaps-automation",
             "description": "End-to-end order personalization platform for Etsy constellation posters with instant buyer portal access, Google location integration, automated poster rendering, approval workflow, Etsy order closure, and timed digital delivery.",
