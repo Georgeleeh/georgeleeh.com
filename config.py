@@ -183,6 +183,20 @@ class Config:
             ],
         },
         {
+            "name": "Third-Party Data Feed Takeover & CPD Migration",
+            "slug": "third-party-datafeed-cpd-migration",
+            "description": "Led the transition from a third-party intermediary to direct delivery by replicating their Central Product Database logic, rebuilding smoothing/manipulation workflows, and integrating everything into Pinpoint's production datafeed infrastructure.",
+            "stack": ["Python", "SQL", "Data Modeling", "ETL/ELT", "AWS", "Datafeed Operations"],
+            "link": "#",
+            "details": [
+                "<strong>The Context:</strong> Retail Spotlight originally supplied data to a third-party partner who repackaged it and distributed it to downstream clients as part of a commercial agreement. After Retail Spotlight took over that partner, we needed to internalize the entire delivery capability without disrupting existing client contracts.",
+                "<strong>The Core Challenge:</strong> Their output quality depended on a Central Product Database (CPD) plus bespoke manipulation and smoothing logic layered on top of our raw feeds. We could not simply copy tables; we had to faithfully reproduce transformation behavior so downstream clients saw continuity in both schema and business meaning.",
+                "<strong>The Delivery Approach:</strong> I helped replicate the CPD structures, mapped transformation rules into maintainable pipeline logic, and implemented a scheduled load process aligned with client delivery windows. We validated parity by running side-by-side comparisons of old versus new outputs, reconciling differences at product, category, and aggregate levels before cutover.",
+                "<strong>Integration & Operations:</strong> Instead of creating a one-off system, we integrated the new CPD-derived outputs into Pinpoint's existing datafeed infrastructure, including monitoring, retry behavior, and operational alerting. This reduced long-term maintenance risk and gave the team one consistent operational model for all feeds.",
+                "<strong>Outcome:</strong> The takeover preserved client-facing continuity while removing intermediary dependency. Retail Spotlight gained direct control over transformation quality, release cadence, and support workflows, with a reproducible process for future feed onboarding and migration work.",
+            ],
+        },
+        {
             "name": "StarrySkyMaps Automation Platform",
             "slug": "starrymaps-automation",
             "description": "End-to-end order personalization platform for Etsy constellation posters with instant buyer portal access, Google location integration, automated poster rendering, approval workflow, Etsy order closure, and timed digital delivery.",
