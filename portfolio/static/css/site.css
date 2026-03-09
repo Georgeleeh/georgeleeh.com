@@ -331,11 +331,26 @@ p {
   gap: 0.85rem;
 }
 
+.mini-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  transition: all 0.2s ease;
+}
+
+.mini-card-link:hover .mini-card {
+  border-color: var(--primary);
+  background: var(--panel-soft);
+  box-shadow: 0 0 20px rgba(102, 217, 255, 0.15);
+}
+
 .mini-card {
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--panel);
   padding: 1rem;
+  transition: all 0.2s ease;
+  flex: 1;
 }
 
 .mini-card h3 {
