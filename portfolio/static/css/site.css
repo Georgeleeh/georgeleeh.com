@@ -572,6 +572,11 @@ p {
   font-weight: bold;
 }
 
+.detail-list li strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
 .detail-cta {
   text-align: center;
 }

@@ -12,7 +12,7 @@
       <h2>Technical Approach</h2>
       <ul class="detail-list">
         {% for detail in project.details %}
-        <li>{{ detail }}</li>
+        <li>{{ detail|safe }}</li>
         {% endfor %}
       </ul>
     </div>
