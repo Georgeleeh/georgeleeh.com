@@ -265,4 +265,17 @@ class Config:
                 "<strong>The Payoff:</strong> The car now runs reliably and I've driven it hundreds of miles. It's not perfect—classic cars demand ongoing maintenance—but it's functional. More importantly, I developed skills that transfer directly to backend engineering: systematic diagnosis, building mental models of complex systems, and accepting that real-world systems are messier than diagrams suggest.",
             ],
         },
+        {
+            "name": "Boutique Guitar Pedal Builds (FuzzDog Kits)",
+            "slug": "guitar-pedal-builds",
+            "description": "Non-serious but deeply technical pedal-building workflow: start from FuzzDog kits, prototype and tune circuits on breadboard, then finish with custom powder-coated enclosures and self-designed decals.",
+            "stack": ["Electronics", "Analog Circuits", "Breadboarding", "Soldering", "Powder Coating", "Graphic Design"],
+            "link": "#",
+            "details": [
+                "<strong>The Hobby:</strong> I build custom guitar pedals for fun, usually starting with FuzzDog kits as a solid reference design. It scratches the same itch as software engineering: start with a known-good baseline, test assumptions, then iterate toward something that feels uniquely mine.",
+                "<strong>The Engineering Process:</strong> Before committing to solder, I breadboard the circuit and audition component/value changes by ear and measurement. I tweak resistor and capacitor values, try different clipping diode combinations, and adjust gain/filter sections to shape the response for my playing style rather than sticking rigidly to the stock schematic.",
+                "<strong>The Finishing Workflow:</strong> Once the circuit is dialed in, I move to enclosure work. I powder-coat the pedal housings myself, design original artwork/labels, print custom decals, and apply them before final assembly. The goal is a pedal that sounds personal and looks like a finished product, not a prototype.",
+                "<strong>Why It Matters:</strong> It keeps my electronics fundamentals sharp—signal path reasoning, tolerance trade-offs, noise management, and practical debugging. It is intentionally non-serious, but it has made me better at disciplined experimentation and translating theory into tactile, working systems.",
+            ],
+        },
     ]
